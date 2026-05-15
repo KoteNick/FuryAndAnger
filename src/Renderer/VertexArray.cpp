@@ -27,6 +27,10 @@ void VertexArray::AddBuffer(const VertexBuffer& vb, const VertexBufferLayout& la
 	}
 }
 
+unsigned int VertexArray::GetId() const {
+	return m_RendererID;
+}
+
 void VertexArray::Bind() const
 {
 	GLCall(glBindVertexArray(m_RendererID));

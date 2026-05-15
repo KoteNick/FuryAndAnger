@@ -6,10 +6,10 @@
 
 class Material
 {
-	bool isDirty;
+	bool isDirty = true;
 
 public:
-	Shader* shader;
+	Shader* shader = nullptr;
 	std::vector<Texture*> textures;
 	Material() = default;
 	Material(Shader* shader);
@@ -25,6 +25,7 @@ private:
 	// Uniform types to add
 	std::unordered_map<std::string, float> floats;
 	std::unordered_map<std::string, glm::vec3> vec3s;
+	std::unordered_map<std::string, glm::vec4> vec4s;
 };
 
 
@@ -39,4 +40,10 @@ template<>
 inline glm::vec3& Material::uniform<glm::vec3>(const std::string& name) {
 	isDirty = true;
 	return vec3s[name];
+}
+
+template<>
+inline glm::vec4& Material::uniform<glm::vec4>(const std::string& name) {
+	isDirty = true;
+	return vec4s[name];
 }

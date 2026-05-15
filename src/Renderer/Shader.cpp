@@ -11,10 +11,20 @@ Shader::Shader()
     m_RendererID = glCreateProgram();
 }
 
+Shader::Shader(std::string vertexShaderLocation, std::string fragmentShaderLocation) : Shader()
+{
+    AddProgram(vertexShaderLocation, ShaderType::VERTEX);
+    AddProgram(fragmentShaderLocation, ShaderType::FRAGMENT);
+}
+
 Shader::~Shader()
 {
     glDeleteProgram(m_RendererID);
 }
+
+unsigned int Shader::GetId() const {
+    return m_RendererID;
+};
 
 void Shader::Bind() const
 {
@@ -72,6 +82,7 @@ Shader& Shader::AddProgram(const std::string& filepath, ShaderType type)
 Shader& Shader::Build() {
     glLinkProgram(m_RendererID);
     glValidateProgram(m_RendererID);
+    CacheActiveUniforms();
     wasCompiled = true;
     return *this;
 }

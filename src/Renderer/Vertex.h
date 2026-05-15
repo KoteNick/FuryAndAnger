@@ -1,5 +1,6 @@
 #pragma once
 #include "glm/glm.hpp"
+#include "VertexBufferLayout.h"
 
 struct Vertex2D
 {

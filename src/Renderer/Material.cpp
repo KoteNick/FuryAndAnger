@@ -1,7 +1,8 @@
 #include "Material.h"
 
-Material::Material(Shader* shader) : shader(shader), isDirty(false)
+Material::Material(Shader* shader) : shader(shader)
 {
+	vec4s["u_Color"] = glm::vec4(1.0);
 }
 
 void Material::ApplyUniforms()
@@ -15,4 +16,7 @@ void Material::ApplyUniforms()
 
 	for (auto& v : vec3s)
 		shader->SetUniform3f(v.first, v.second.x, v.second.y, v.second.z);
+
+	for (auto& v : vec4s)
+		shader->SetUniform4f(v.first, v.second.x, v.second.y, v.second.z, v.second.w);
 }

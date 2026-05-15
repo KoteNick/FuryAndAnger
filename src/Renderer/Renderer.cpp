@@ -15,19 +15,43 @@ bool GLLogCall(const char* function, const char* file, int line)
     return true;
 }
 
+void Renderer::Submit(RenderCall& call)
+{
+    renderQueue.push_back(call);
+}
+
+void Renderer::Flush()
+{
+    // TODO: add sorting
+    for (const RenderCall& r : renderQueue) {
+        Draw(r);
+    }
+    renderQueue.clear();
+}
+
 void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader) const
 {
     shader.Bind();
     va.Bind();
     ib.Bind();
 
-    GLCall(glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr));
+    glDrawElements(GL_TRIANGLES, ib.GetCount(), GL_UNSIGNED_INT, nullptr);
 }
 
 void Renderer::Draw(RenderCall call)
 {
-    call.material->shader->Bind();
-    call.mesh->Bind();
+    if (idShader != call.material->shader->GetId()) {
+        idShader = call.material->shader->GetId();
+        call.material->shader->Bind();
+    }
+
+    if (idMesh != call.mesh->GetId()) {
+        idMesh = call.mesh->GetId();
+        call.mesh->Bind();
+    }
+
+    call.material->shader->SetUniformMat4f("u_Model", call.model);
+    call.material->ApplyUniforms();
 
     if (call.mesh->UseIndexBuffer())
         glDrawElements(GL_TRIANGLES, call.mesh->Count(), GL_UNSIGNED_INT, nullptr);
@@ -37,5 +61,6 @@ void Renderer::Draw(RenderCall call)
 
 void Renderer::Clear() const
 {
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
+   glClear(GL_COLOR_BUFFER_BIT);
+   glClear(GL_DEPTH_BUFFER_BIT);
 }

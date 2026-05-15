@@ -22,6 +22,11 @@ size_t Mesh::Count()
 		return vertexCount;
 }
 
+unsigned int Mesh::GetId() const
+{
+	return va->GetId();
+}
+
 bool Mesh::UseIndexBuffer()
 {
 	return (ib != nullptr);

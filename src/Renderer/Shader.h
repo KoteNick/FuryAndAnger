@@ -27,9 +27,11 @@ private:
 	std::unordered_map<std::string, UniformInfo> m_uniLocCache;
 public:
 	Shader();
+	Shader(std::string vertexShaderLocation, std::string fragmentShaderLocation);
 	//Shader(std::initializer_list<ShaderTuple> list);
 	~Shader();
 
+	unsigned int GetId() const;
 	void Bind() const;
 	void Unbind() const;
 
