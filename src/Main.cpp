@@ -72,7 +72,7 @@ int main(void)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(960, 540, "Fury", NULL, NULL);
+    window = glfwCreateWindow(1600, 900, "Fury", NULL, NULL);
     if (!window)
     {
         glfwTerminate();
@@ -108,17 +108,10 @@ int main(void)
         //glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
 
         glEnable(GL_BLEND);
+        //glEnable(GL_DEPTH_TEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-        Shader shader;
-        shader
-            .AddProgram("assets/shaders/Basic2D.frag", ShaderType::FRAGMENT)
-            .AddProgram("assets/shaders/Basic2D.vert", ShaderType::VERTEX)
-            .Build();
-        Material mat(&shader);
-
         float time = 0;
-        int width, height;
 
         Game* game = new Game;
 
@@ -127,12 +120,12 @@ int main(void)
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
-            glfwGetWindowSize(window, &width, &height);
-            glViewport(0, 0, width, height);
+            glfwGetWindowSize(window, &game->windowSize.width, &game->windowSize.height);
+            glViewport(0, 0, game->windowSize.width, game->windowSize.height);
 
             float currentTime = (float)glfwGetTime();
-            float deltaTime = currentTime - time;
-            time = currentTime;
+            float deltaTime = currentTime - game->time;
+            game->time = currentTime;
 
             Renderer::Get().Clear();
 

@@ -27,7 +27,7 @@ unsigned int Mesh::GetId() const
 	return va->GetId();
 }
 
-bool Mesh::UseIndexBuffer()
+bool Mesh::UseIndexBuffer() const
 {
 	return (ib != nullptr);
 }

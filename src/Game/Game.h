@@ -3,6 +3,9 @@
 #include <vector>
 
 class Game {
+	struct WindowSize {
+		int width, height;
+	};
 private:
 	static Game* instance;
 public:
@@ -14,7 +17,9 @@ public:
 	}
 	static Game& Get() { return *instance; }
 public:
-	Entity triangle, triangle2;
+	float time = 0;
+	WindowSize windowSize = {};
+	Entity triangle, triangle2, camera;
 
 	void Init();
 	void OnUpdate(float deltaTime);

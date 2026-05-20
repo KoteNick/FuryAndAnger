@@ -38,7 +38,7 @@ public:
 	Mesh(VertexData& vertexData);
 	size_t Count();
 	unsigned int GetId() const;
-	bool UseIndexBuffer();
+	bool UseIndexBuffer() const;
 	void Bind();
 	void Unbind();
 };
