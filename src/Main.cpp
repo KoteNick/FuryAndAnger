@@ -14,6 +14,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "Core/Input.h"
+
 #include "Renderer/Renderer.h"
 #include "Renderer/Vertex.h"
 
@@ -111,6 +113,8 @@ int main(void)
         //glEnable(GL_DEPTH_TEST);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+        Input::Init(window);
+
         float time = 0;
 
         Game* game = new Game;
@@ -132,6 +136,8 @@ int main(void)
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
+
+            Input::Update();
 
             game->OnUpdate(deltaTime);
 

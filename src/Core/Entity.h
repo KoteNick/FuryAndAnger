@@ -41,5 +41,9 @@ public:
 		int id = ComponentID::Get<T>();
 		return components.count(id) > 0;
 	}
+
+	TransformComponent* Transform() {
+		return GetComponent<TransformComponent>();
+	}
 };
 

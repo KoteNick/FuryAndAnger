@@ -40,7 +40,14 @@ struct TransformComponent : Component {
     TransformComponent() = default;
     TransformComponent(float x, float y, float z) : pos(x, y, z) {};
 
+    glm::mat4 GetRotationMatrix() const;
     glm::mat4 GetModelMatrix() const;
+
+    glm::vec3 GetForward() const;
+    glm::vec3 GetRight() const;
+    glm::vec3 GetUp() const;
+
+    void Move(float rightOffset, float upOffset, float forwardOffset);
 
     std::unique_ptr<Component> Clone() const override;
 };

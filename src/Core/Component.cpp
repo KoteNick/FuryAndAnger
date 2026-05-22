@@ -14,14 +14,37 @@ std::unique_ptr<Component> RenderableComponent::Clone() const
 	return std::make_unique<RenderableComponent>(*this);
 }
 
-glm::mat4 TransformComponent::GetModelMatrix() const
-{
+glm::mat4 TransformComponent::GetRotationMatrix() const {
+    glm::mat4 rotation(1.0f);
+    rotation = glm::rotate(rotation, glm::radians(rot.y), { 0, 1, 0 });
+    rotation = glm::rotate(rotation, glm::radians(rot.x), { 1, 0, 0 });
+    rotation = glm::rotate(rotation, glm::radians(rot.z), { 0, 0, 1 });
+    return rotation;
+}
+
+glm::mat4 TransformComponent::GetModelMatrix() const {
     glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos);
-    transform = glm::rotate(transform, rot.x, { 1, 0, 0 });
-    transform = glm::rotate(transform, rot.y, { 0, 1, 0 });
-    transform = glm::rotate(transform, rot.z, { 0, 0, 1 });
+    transform *= GetRotationMatrix();
     transform = glm::scale(transform, scale);
     return transform;
+}
+
+glm::vec3 TransformComponent::GetForward() const {
+    return glm::normalize(glm::vec3(GetRotationMatrix()[2])) * -1.0f;
+}
+
+glm::vec3 TransformComponent::GetRight() const {
+    return glm::normalize(glm::vec3(GetRotationMatrix()[0]));
+}
+
+glm::vec3 TransformComponent::GetUp() const {
+    return glm::normalize(glm::vec3(GetRotationMatrix()[1]));
+}
+
+void TransformComponent::Move(float rightOffset, float upOffset, float forwardOffset) {
+    pos += GetRight() * rightOffset;
+    pos += GetUp() * upOffset;
+    pos += GetForward() * forwardOffset;
 }
 
 std::unique_ptr<Component> TransformComponent::Clone() const
