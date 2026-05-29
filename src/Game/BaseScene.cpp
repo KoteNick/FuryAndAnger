@@ -2,6 +2,11 @@
 
 Entity& BaseScene::CreateEntity(const std::string& name)
 {
+    if (name.empty()) {
+        entities.emplace_back("Entity");
+        return entities.back();
+    }
+
     std::string finalName = name;
     int counter = 1;
 

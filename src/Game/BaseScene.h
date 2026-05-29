@@ -1,6 +1,9 @@
 #pragma once
 #include "Core/Entity.h"
 #include "Core/Input.h"
+
+#include "imgui/imgui.h"
+
 #include "Assets.h"
 
 #include <deque>
@@ -13,7 +16,7 @@ public:
 	Entity* camera = nullptr;
 	glm::vec3 ambient = {0.05f, 0.05f, 0.1f};
 
-	Entity& CreateEntity(const std::string& name);
+	Entity& CreateEntity(const std::string& name = "");
 	Entity* GetEntity(const std::string& name);
 
 	void UpdateEntities(float deltaTime);

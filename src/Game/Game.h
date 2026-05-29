@@ -1,5 +1,8 @@
 #pragma once
 #include "Core/Entity.h"
+#include "Scenes/Scenes.h"
+#include "BaseScene.h"
+
 #include <vector>
 
 class Game {
@@ -8,6 +11,7 @@ class Game {
 	};
 private:
 	static Game* instance;
+	BaseScene* currentScene = nullptr;
 public:
 	Game() {
 		instance = this;
@@ -19,8 +23,6 @@ public:
 public:
 	float time = 0;
 	WindowSize windowSize = {};
-	Entity triangle, triangle2, camera, cube, plane, sphere, light, sun;
-	glm::vec4 ambient;
 
 	void Init();
 	void OnUpdate(float deltaTime);

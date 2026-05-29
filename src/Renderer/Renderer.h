@@ -40,7 +40,7 @@ struct LightData {
 
 struct LightsUBOData
 {
-    int count;
+    int count = 0;
     int padding[3];
     LightData lights[Config::MAX_LIGHTS] = {};
 };
